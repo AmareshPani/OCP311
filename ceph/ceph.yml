@@ -1,0 +1,8 @@
+- hosts: mons
+  become_user: true
+  tasks:
+    - name: Ceph Mons 
+      script: mons.sh
+      register: output
+
+    - debug: var=output.stdout_lines

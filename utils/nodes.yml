@@ -1,0 +1,8 @@
+- hosts: ocp
+  become_user: true
+  tasks:
+    - name: Test host name
+      script: nodes.sh
+      register: output
+
+    - debug: var=output.stdout_lines

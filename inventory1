@@ -1,0 +1,65 @@
+[OSEv3:children]
+masters
+nodes
+etcd
+#lb
+#new_nodes
+
+# Set variables common for all OSEv3 hosts
+[OSEv3:vars]
+ansible_ssh_user=root
+os_firewall_use_firewalld=True
+#enable_excluders=false
+#enable_docker_excluder=false
+#ansible_service_broker_install=false
+
+openshift_disable_check=disk_availability,docker_storage,memory_availability,docker_image_availability
+openshift_deployment_type=openshift-enterprise
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
+openshift_master_htpasswd_users={'user1': 'Password1', 'user2': 'Password1'}
+
+oreg_url=registry.redhat.io/openshift3/ose-${component}:${version}
+oreg_auth_user=6189685|apani
+oreg_auth_password=eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJjNWUxMjVhMzI2ZmU0NDExYjhkMjQ3NGYxMmM1Yjk5ZSJ9.TUXqZFZ04L1J-uQb1cq4_-JhjijUF6dQf0s89U1_pU9ddjBIExH6ZlExUWVopQA4qvgHV3x79aU9DfuwFsuWa8bqqL5tmavTCvzmT8sRlUQvX166pM3WkJMCiMNFve0YjuiuW2TDBxkdzVpnMkMHSUOhX_sWdQK-019TxH9Q1Pp_hOIHvXmlSSAYAfpqGUne-dZ3fHb-RmVRaomkggYxKJAXdopETWSmkiSh5WJMf052_x0Wm02ONfGMesSUUKJ7lbSSD9y05HFgLKTMd8K30DGETM8FACbnECv3Ci3c3UhqUwTwQBNlNfQ7AQl5EugUd4S8lKat6dJMRuSNjfudTkYUqPN6qtaPiZbedQZ5EPAH0sHrcPDg_MSv94nYjyDu8KJARuHXhAwFtUDSyIaACelUplEpjkQtUKHytiWG1oFzu3LASU7rddGi4uyAlFSQRVy9q_MTKejDqmXqCQnBsVFsNY77ezVKpBGe-5AVkrjR6_fh1AXjSXgOTSyIWC9u9uavrQ6aP6toYLSSWznUWFHI_Zg_l3P0jQc52fkZFhIdgmdNUT5HjbrsW4F89haZjmc7AbJDiiWGZ_Rrk-wzaaHSf3ujQMQfJjgQ3Csb4mU1GbcVtd5wA8AeTxpftj6YKT-u45vDjjdsqDUxM2zIYUhlECI_Cz75amuJ5vxvq5o
+
+
+openshift_master_cluster_method=native
+openshift_master_cluster_hostname=datahub.vs.com
+openshift_master_cluster_public_hostname=datahub.vs.com
+openshift_master_default_subdomain=apps.master01.vs.com
+
+openshift_master_dynamic_provisioning_enabled=True
+
+openshift_http_proxy=http://10.131.236.9:3128
+openshift_https_proxy=http://10.131.236.9:3128
+openshift_no_proxy=vs.com,10.100.24.114,10.100.24.115,10.100.24.116,10.100.24.117,10.100.24.118,10.100.24.119,10.100.24.120,10.100.24.121,10.100.24.122,10.100.24.123,10.100.24.124,10.100.24.125,10.100.24.126,10.100.24.127,10.100.24.128,10.100.24.129,172.30.0.1,.cluster.local,.svc,localhost,127.0.0.1,master01.vs.com,master02.vs.com,master03.vs.com,installationhost,.vs.com,.apps.datahub.vs.com,172.30.82.232,lb.vs.com,datahub.vs.com
+
+osm_use_cockpit=false
+osm_cluster_network_cidr=10.2.0.0/16
+os_firewalld_use_firewalld=true
+openshift_hosted_router_replicas=3
+
+[masters]
+master01.vs.com
+master02.vs.com
+master03.vs.com
+
+[etcd]
+master01.vs.com
+master02.vs.com
+master03.vs.com
+
+#[lb]
+#master02.vs.com
+
+[nodes]
+master01.vs.com  openshift_node_group_name='node-config-master-infra'
+master02.vs.com  openshift_node_group_name='node-config-master-infra'
+master03.vs.com  openshift_node_group_name='node-config-master-infra'
+worker01.vs.com openshift_node_group_name='node-config-compute'
+worker02.vs.com openshift_node_group_name='node-config-compute'
+worker03.vs.com openshift_node_group_name='node-config-compute'
+worker04.vs.com openshift_node_group_name='node-config-compute'
+
+#[new_nodes]
+#worker03.vs.com openshift_node_group_name='node-config-compute'
